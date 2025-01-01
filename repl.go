@@ -5,10 +5,14 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/dawcr/pokedexcli/internal/pokeapi"
 )
 
 func startRepl() {
 	reader := bufio.NewScanner(os.Stdin)
+
+	conf := pokeapi.NewConfig()
 
 	for {
 		fmt.Print("Pokedex >")
@@ -25,8 +29,8 @@ func startRepl() {
 			fmt.Println("Unknown command")
 			continue
 		}
-		if err := cmd.callback(); err != nil {
-			fmt.Printf("%s command returned with error: %s", cmd.name, err)
+		if err := cmd.callback(conf); err != nil {
+			fmt.Printf("%s command returned with error: %s\n", cmd.name, err)
 		}
 	}
 }
@@ -38,7 +42,7 @@ func cleanInput(text string) []string {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func() error
+	callback    func(*pokeapi.Config) error
 }
 
 func getCommands() map[string]cliCommand {
@@ -52,6 +56,16 @@ func getCommands() map[string]cliCommand {
 			name:        "help",
 			description: "Displays a help message",
 			callback:    commandHelp,
+		},
+		"map": {
+			name:        "map",
+			description: "return 20 locations",
+			callback:    commandMapf,
+		},
+		"mapb": {
+			name:        "mapb",
+			description: "return previous 20 locations",
+			callback:    commandMapB,
 		},
 	}
 }
