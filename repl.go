@@ -9,10 +9,8 @@ import (
 	"github.com/dawcr/pokedexcli/internal/pokeapi"
 )
 
-func startRepl() {
+func startRepl(cfg *pokeapi.Config) {
 	reader := bufio.NewScanner(os.Stdin)
-
-	conf := pokeapi.NewConfig()
 
 	for {
 		fmt.Print("Pokedex >")
@@ -29,7 +27,7 @@ func startRepl() {
 			fmt.Println("Unknown command")
 			continue
 		}
-		if err := cmd.callback(conf); err != nil {
+		if err := cmd.callback(cfg); err != nil {
 			fmt.Printf("%s command returned with error: %s\n", cmd.name, err)
 		}
 	}

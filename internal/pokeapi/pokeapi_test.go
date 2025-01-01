@@ -2,18 +2,19 @@ package pokeapi
 
 import (
 	"testing"
+	"time"
 )
 
 func TestNewConfig(t *testing.T) {
 	t.Run("new config should have correct initial state", func(t *testing.T) {
-		config := NewConfig()
+		config := NewConfig(5 * time.Second)
 
 		baseURL := "https://pokeapi.co/api/v2/location-area"
-		if *config.Next != baseURL {
-			t.Errorf("expected Next URL to be %q, got %q", baseURL, *config.Next)
+		if *config.nextLocationsURL != baseURL {
+			t.Errorf("expected Next URL to be %q, got %q", baseURL, *config.nextLocationsURL)
 		}
 
-		if config.Previous != nil {
+		if config.previousLocationsURL != nil {
 			t.Error("expected Previous URL to be nil")
 		}
 	})
@@ -29,10 +30,10 @@ func TestGetNextLocation(t *testing.T) {
 	})
 
 	t.Run("GetNextLocation should error on last page", func(t *testing.T) {
-		config := NewConfig()
+		config := NewConfig(5 * time.Second)
 		lastPageURL := "example.com"
-		config.Next = nil
-		config.Previous = &lastPageURL
+		config.nextLocationsURL = nil
+		config.previousLocationsURL = &lastPageURL
 
 		expectedMsg := "you're on the last page"
 		_, err := GetNextLocation(config)
@@ -52,7 +53,7 @@ func TestGetPreviousLocation(t *testing.T) {
 	})
 
 	t.Run("GetPreviousLocation should error on first page", func(t *testing.T) {
-		config := NewConfig()
+		config := NewConfig(5 * time.Second)
 
 		expectedMsg := "you're on the first page"
 		_, err := GetPreviousLocation(config)

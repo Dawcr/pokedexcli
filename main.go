@@ -1,5 +1,12 @@
 package main
 
+import (
+	"time"
+
+	"github.com/dawcr/pokedexcli/internal/pokeapi"
+)
+
 func main() {
-	startRepl()
+	configurations := pokeapi.NewConfig(5 * time.Second)
+	startRepl(configurations)
 }
