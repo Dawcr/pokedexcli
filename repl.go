@@ -5,11 +5,9 @@ import (
 	"fmt"
 	"os"
 	"strings"
-
-	"github.com/dawcr/pokedexcli/internal/pokeapi"
 )
 
-func startRepl(cfg *pokeapi.Config) {
+func startRepl(cfg *Config) {
 	reader := bufio.NewScanner(os.Stdin)
 
 	for {
@@ -40,7 +38,7 @@ func cleanInput(text string) []string {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(*pokeapi.Config) error
+	callback    func(*Config) error
 }
 
 func getCommands() map[string]cliCommand {
