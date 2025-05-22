@@ -6,11 +6,11 @@ import (
 	"github.com/dawcr/pokedexcli/internal/pokeapi"
 )
 
-func commandMapf(cfg *Config) error {
+func commandMapf(cfg *Config, userParam string) error {
 	return cfg.handleData(cfg.GetNextLocation())
 }
 
-func commandMapB(cfg *Config) error {
+func commandMapB(cfg *Config, userParam string) error {
 	return cfg.handleData(cfg.GetPreviousLocation())
 }
 
