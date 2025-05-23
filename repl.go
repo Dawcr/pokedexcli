@@ -20,9 +20,9 @@ func startRepl(cfg *Config) {
 		}
 		userChoice := input[0]
 
-		userParam := ""
+		userParams := []string{}
 		if len(input) > 1 {
-			userParam = input[1]
+			userParams = input[1:]
 		}
 
 		cmd, ok := getCommands()[userChoice]
@@ -30,7 +30,7 @@ func startRepl(cfg *Config) {
 			fmt.Println("Unknown command")
 			continue
 		}
-		if err := cmd.callback(cfg, userParam); err != nil {
+		if err := cmd.callback(cfg, userParams...); err != nil {
 			fmt.Printf("%s command returned with error: %s\n", cmd.name, err)
 		}
 	}
@@ -43,7 +43,7 @@ func cleanInput(text string) []string {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(*Config, string) error
+	callback    func(*Config, ...string) error
 }
 
 func getCommands() map[string]cliCommand {
