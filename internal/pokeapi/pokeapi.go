@@ -11,7 +11,6 @@ import (
 // Get a list of locations
 func (c *Client) GetLocation(url *string) (LocationArea, error) {
 	var data LocationArea
-	fmt.Println(url)
 	if err := c.GetData(url, &data); err != nil {
 		return LocationArea{}, err
 	}
@@ -24,6 +23,24 @@ func (c *Client) GetMons(url *string) (LocationMons, error) {
 	var data LocationMons
 	if err := c.GetData(url, &data); err != nil {
 		return LocationMons{}, err
+	}
+
+	return data, nil
+}
+
+func (c *Client) GetMonStats(url *string) (PokemonSpecies, error) {
+	var data PokemonSpecies
+	if err := c.GetData(url, &data); err != nil {
+		return PokemonSpecies{}, err
+	}
+
+	return data, nil
+}
+
+func (c *Client) GetMonDetails(url *string) (Pokemon, error) {
+	var data Pokemon
+	if err := c.GetData(url, &data); err != nil {
+		return Pokemon{}, err
 	}
 
 	return data, nil

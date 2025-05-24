@@ -60,18 +60,23 @@ func getCommands() map[string]cliCommand {
 		},
 		"map": {
 			name:        "map",
-			description: "return 20 locations",
+			description: "Return 20 locations",
 			callback:    commandMapf,
 		},
 		"mapb": {
 			name:        "mapb",
-			description: "return previous 20 locations",
+			description: "Return previous 20 locations",
 			callback:    commandMapB,
 		},
 		"explore": {
-			name:        "explore",
-			description: "list all pokemon found in a location",
+			name:        "explore <location name>",
+			description: "List all pokemon found in a location",
 			callback:    commandExplore,
+		},
+		"catch": {
+			name:        "catch <pokemon name>",
+			description: "Try to catch a pokemon",
+			callback:    commandCatch,
 		},
 	}
 }
