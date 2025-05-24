@@ -28,15 +28,6 @@ func (c *Client) GetMons(url *string) (LocationMons, error) {
 	return data, nil
 }
 
-func (c *Client) GetMonStats(url *string) (PokemonSpecies, error) {
-	var data PokemonSpecies
-	if err := c.GetData(url, &data); err != nil {
-		return PokemonSpecies{}, err
-	}
-
-	return data, nil
-}
-
 func (c *Client) GetMonDetails(url *string) (Pokemon, error) {
 	var data Pokemon
 	if err := c.GetData(url, &data); err != nil {
