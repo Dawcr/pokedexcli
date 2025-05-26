@@ -33,6 +33,9 @@ func commandCatch(cfg *Config, userParams ...string) error {
 	// F is calculated via steps listed in https://www.dragonflycave.com/mechanics/gen-i-capturing assuming 69% hp remaining in this case (hopefully my math is correct)
 	if captureRate > float64(R1) && math.Min(float64(rand.Intn(256)), 255) < 123 {
 		fmt.Printf("%s was caught!\n", target)
+		if _, ok := cfg.pokedex.caughtMons[target]; !ok {
+			fmt.Println("You may now inspect it with the inspect command.")
+		}
 		cfg.pokedex.caughtMons[target] = data
 	} else {
 		fmt.Printf("%s escaped!\n", target)
