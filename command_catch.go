@@ -25,7 +25,7 @@ func commandCatch(cfg *Config, userParams ...string) error {
 	// Regular pokeballs roll a number between 0 and 255 inclusive
 	R1 := rand.Intn(256)
 
-	// Estimate capture rate to not hammer the API
+	// Estimate capture rate from exp yield to not hammer the API
 	captureRate := math.Round(252/(1+math.Exp(0.1*float64(data.BaseExperience-150))) + 3)
 
 	// if base capture rate is less than R1 the mon breaks free (not using R* since the mon has no status effects here)
